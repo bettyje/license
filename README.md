@@ -58,4 +58,4 @@ Admin → http://127.0.0.1:8000/admin/
 ```
 👩‍💻 Author
 
-Forked & customized by Betty Cherutich
+Forked & customized by Betty Jelagat
