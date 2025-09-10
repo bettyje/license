@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Licenses Directory</title>
+</head>
+<body>
+    <h1>Licenses Directory</h1>
+
+    <h2>Categories</h2>
+    <ul>
+        {% for cat in categories %}
+            <li>{{ cat.name }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Licenses</h2>
+    <ul>
+        {% for lic in licenses %}
+            <li>
+                <strong>{{ lic.name|safe }}</strong><br>
+                Address: {{ lic.address }}<br>
+                License #: {{ lic.license_number }}<br>
+                Website: <a href="{{ lic.weblink }}" target="_blank">{{ lic.weblink }}</a><br>
+                Category: {{ lic.category }}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
