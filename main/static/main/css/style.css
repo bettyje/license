@@ -143,4 +143,31 @@
   text-decoration: none;
   color: #000000;
 }
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination .page-item .page-link {
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    background-color: white;
+    color: var(--primary-color);
+    font-size: 14px;
+    padding: 8px 14px;
+    transition: all 0.3s ease;
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
 

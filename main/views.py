@@ -7,16 +7,20 @@ from .models import License, LicenseCategory
 def license_list(request, category_id=None):
     """
     Display a list of licenses.
-    - If category_id is given, filter by that category.
+    - Supports filtering by category (from URL or GET param).
     - Supports search (q).
     - Paginate results (10 per page).
     """
 
-    # Get all licenses with their related category
     licenses_qs = License.objects.select_related('category').all()
-
     category = None
-    if category_id:
+
+    # Handle category from GET (dropdown) or URL
+    category_param = request.GET.get("category")
+    if category_param:
+        category = get_object_or_404(LicenseCategory, id=category_param)
+        licenses_qs = licenses_qs.filter(category=category)
+    elif category_id:
         category = get_object_or_404(LicenseCategory, id=category_id)
         licenses_qs = licenses_qs.filter(category=category)
 
@@ -32,18 +36,18 @@ def license_list(request, category_id=None):
     # Order by name
     licenses_qs = licenses_qs.order_by("name")
 
-    # Pagination (10 items per page)
+    # Pagination
     paginator = Paginator(licenses_qs, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
     context = {
-        "licenses": page_obj,                  # licenses to display
-        "page_obj": page_obj,                  # pagination object
+        "licenses": page_obj,
+        "page_obj": page_obj,
         "is_paginated": page_obj.has_other_pages(),
-        "category": category,                  # current category
-        "categories": LicenseCategory.objects.all(),  # for sidebar/filter dropdown
-        "query": query,                        # current search term
+        "category": category,
+        "categories": LicenseCategory.objects.all(),
+        "query": query,
     }
     return render(request, "main/license_list.html", context)
 
